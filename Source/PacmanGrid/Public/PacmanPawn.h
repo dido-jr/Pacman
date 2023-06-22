@@ -35,6 +35,7 @@ public:
 	UPROPERTY(EditAnywhere)
 		int32 life = 3;
 	void LifeCounter();
+	void PacmanSpawn();
 	
 
 protected:

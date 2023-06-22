@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "PhantomPawn.h"
+#include"PacmanPawn.h"
 #include "Blinky.generated.h"
 
 /**

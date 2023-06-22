@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GridPawn.h"
+#include "PacmanPawn.h"
 #include "PhantomPawn.generated.h"
 
 /**
@@ -12,6 +13,8 @@
 
  UENUM()
  enum EPhantomState { Chase, Scatter, Frightened };
+ UENUM()
+	 enum EPrevPhantomState { PChase,PScatter, PFrightened };
 
 UCLASS()
 class PACMANGRID_API APhantomPawn : public AGridPawn
@@ -68,11 +71,16 @@ public:
 	//void SetGhostTarget();
 	UPROPERTY(EditAnywhere)
 		TEnumAsByte<EPhantomState> PhantomState = Scatter;
+	UPROPERTY(EditAnywhere)
+		TEnumAsByte<EPhantomState> PrevPhantomState;
 	FTimerHandle Timer;
 	FTimerHandle MeshTimer;
+	FTimerHandle HomeTimer;
 	void SetBlueMesh();
 	void SetWhiteMesh();
 	void Eat();
 	int flashes = 0;
 	bool eaten;
+	void Home();
+	void exit();
 };

@@ -30,12 +30,10 @@ void AInky::SetGhostTarget()
 
 	if (eaten == true)
 	{
-		Target->SetGridPosition(13, 19);//!!!!!!!!!!!!!!!!
-		if (LastNode->GetGridPosition() == FVector2D(13, 19))
+		Target->SetGridPosition(19, 13);
+		if (LastNode->GetGridPosition() == FVector2D(19, 13))
 		{
-			EatenMesh->SetVisibility(false);
-			eaten = false;
-			this->PhantomState = Chase;
+			Home();
 		}
 	}
 

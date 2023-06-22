@@ -61,6 +61,7 @@ void APhantomPawn::Eat()
 	WhiteMesh->SetVisibility(false);
 	EatenMesh->SetVisibility(true);
 	eaten = true;
+	PrevPhantomState = this->PhantomState;
 }
 
 void APhantomPawn::OnNodeReached()
@@ -186,4 +187,27 @@ void APhantomPawn::InvertDirection()
 		FVector new_direction = FVector(0, 1, 0);
 		SetLastValidDirection(new_direction);
 	}
+}
+
+void APhantomPawn::Home()
+{
+	CurrentGridCoords = FVector2D(14, 13);
+	SetNextNode(*(CustomTileMap.Find(FVector2D(16, 13))));
+	SetTargetNode(NextNode);
+	LastNode = *(CustomTileMap.Find(FVector2D(16, 13)));
+	const FVector entry(1650.0f, 1350.0f, GetActorLocation().Z);
+	GetWorldTimerManager().SetTimer(Timer, this, &APhantomPawn::exit, 0.5f, false);
+}
+
+void APhantomPawn::exit()
+{
+	EatenMesh->SetVisibility(false);//dovrebbe cambiare mesh prima di uscire: si può usare un delay
+	eaten = false;
+	this->PhantomState = PrevPhantomState;
+	CurrentGridCoords = FVector2D(19, 13);
+	SetNextNode(*(CustomTileMap.Find(FVector2D(19, 13))));
+	SetTargetNode(NextNode);
+	LastNode = *(CustomTileMap.Find(FVector2D(19, 13)));
+	const FVector ex(1950.0f, 1300.0f, GetActorLocation().Z);
+	SetActorLocation(ex);
 }

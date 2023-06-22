@@ -100,12 +100,12 @@ void APacmanPawn::LifeCounter()
 	life -= 1;
 	if (life == 0)
 	{
-		Destroy();//?????????????????????
+		Destroy();
 	}
 	else
 	{
-		//FVector2D PacmanSpawn = FVector2D()
-		//SetActorLocation();
+		PacmanSpawn();
+		//fantasmi spawn 19,13
 	}
 }
 
@@ -168,3 +168,13 @@ void APacmanPawn::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* Ot
 	}
 
 };
+
+void APacmanPawn::PacmanSpawn()
+{
+		CurrentGridCoords = FVector2D(14, 13);
+		SetNextNode(*(CustomTileMap.Find(FVector2D(14, 13))));
+		SetTargetNode(NextNode);
+		LastNode = *(CustomTileMap.Find(FVector2D(14, 13)));
+		const FVector spawn(1450.0f, 1350.0f, GetActorLocation().Z);
+		SetActorLocation(spawn);	
+}

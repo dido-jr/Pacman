@@ -115,18 +115,18 @@ void AGridPawn::OnNodeReached()
 		CurrentGridCoords = FVector2D(16, 26);
 		SetNextNode(*(CustomTileMap.Find(FVector2D(16, 26))));
 		SetTargetNode(NextNode);
-		LastNode = *(CustomTileMap.Find(FVector2D(15, 26)));
-		const FVector Destra(1750.0f, 2700.0f, GetActorLocation().Z);
+		LastNode = *(CustomTileMap.Find(FVector2D(16, 26)));
+		const FVector Destra(1650.0f, 2600.0f, GetActorLocation().Z);
 		SetActorLocation(Destra);
 	}
 
-	else if (LastNode->GetGridPosition() == FVector2D(17, 26) && LastValidInputDirection == FVector(0, 1, 0))
+	else if (LastNode->GetGridPosition() == FVector2D(16, 26) && LastValidInputDirection == FVector(0, 1, 0))
 	{
-		CurrentGridCoords = FVector2D(17, 1);
-		SetNextNode(*(CustomTileMap.Find(FVector2D(17, 1))));
+		CurrentGridCoords = FVector2D(16, 1);
+		SetNextNode(*(CustomTileMap.Find(FVector2D(16, 1))));
 		SetTargetNode(NextNode);
-		LastNode = *(CustomTileMap.Find(FVector2D(17, 1)));
-		const FVector Destra(1750.0f, 100.0f, GetActorLocation().Z);
+		LastNode = *(CustomTileMap.Find(FVector2D(16, 1)));
+		const FVector Destra(1650.0f, 100.0f, GetActorLocation().Z);
 		SetActorLocation(Destra);
 	}
 }
