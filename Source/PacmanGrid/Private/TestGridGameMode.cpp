@@ -41,6 +41,5 @@ void ATestGridGameMode::BeginPlay()
 	PinkyPawn = GetWorld()->SpawnActor<APinky>(PinkyClass, FVector((100 * 16) + 50, (100 * 13) + 50, 5.0f), FRotator(0, 0, 0));
 	ClydePawn = GetWorld()->SpawnActor<AClyde>(ClydeClass, FVector((100 * 16) + 50, (100 * 15) + 50, 5.0f), FRotator(0, 0, 0));
 
-	//AActor* CherryActor = UGameplayStatics::GetActorOfClass(GetWorld(),AFruit::StaticClass());
-	//Fruit = Cast<AFruit>(CherryActor);
+	//Cherry = GetWorld()->SpawnActor<ACherry>(CherryClass, FVector(), FRotator(0,0,0))
 }

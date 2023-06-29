@@ -15,7 +15,7 @@ AInky::AInky()
 	CurrentGridCoords = FVector2D(5, 26);
 }
 
-void AInky::Tick(float DeltaTime)//
+void AInky::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 	if (this->GetTargetNode() == nullptr)
@@ -48,22 +48,18 @@ void AInky::SetGhostTarget()
 
 			if (GetPlayer()->GetLastValidDirection() == FVector::ForwardVector) //Pacman va sù
 			{
-				//Target->SetGridPosition(Blinky_pos.Y + 2 * (Pacman.Y + 2 - Blinky_pos.Y), Blinky_pos.X + 2 * (Pacman.X - Blinky_pos.X));
 				Target = *(CustomTileMap.Find(FVector2D((Blinky_pos.X + 2 * (Pacman.X - Blinky_pos.X)), (Pacman.Y + 2 - Blinky_pos.Y))));
 			}
 			if (GetPlayer()->GetLastValidDirection() == FVector::BackwardVector) //Pacman va giù
 			{
-				//Target->SetGridPosition(Blinky_pos.Y + 2 * (Pacman.Y - 2 - Blinky_pos.Y), Blinky_pos.X + 2 * (Pacman.X - Blinky_pos.X));
 				Target = *(CustomTileMap.Find(FVector2D((Blinky_pos.X + 2 * (Pacman.X - Blinky_pos.X)), Blinky_pos.Y + 2 * (Pacman.Y - 2 - Blinky_pos.Y))));
 			}
 			else if (GetPlayer()->GetLastValidDirection() == FVector::RightVector) //Pacman va a sx o dx
 			{
-				//Target->SetGridPosition(Blinky_pos.Y + 2 * (Pacman.Y - Blinky_pos.Y), Blinky_pos.X + 2 * (Pacman.X + 2 - Blinky_pos.X));
 				Target = *(CustomTileMap.Find(FVector2D(Blinky_pos.X + 2 * (Pacman.X + 2 - Blinky_pos.X), Blinky_pos.Y + 2 * (Pacman.Y - Blinky_pos.Y))));
 			}
 			else if (GetPlayer()->GetLastValidDirection() == FVector::LeftVector) //Pacman va a sx o dx
 			{
-				//Target->SetGridPosition(Blinky_pos.Y + 2 * (Pacman.Y - Blinky_pos.Y), Blinky_pos.X + 2 * (Pacman.X - 2 - Blinky_pos.X));
 				Target = *(CustomTileMap.Find(FVector2D(Blinky_pos.X + 2 * (Pacman.X - 2 - Blinky_pos.X), Blinky_pos.Y + 2 * (Pacman.Y - Blinky_pos.Y))));
 			}
 		}
@@ -90,4 +86,4 @@ void AInky::SetGhostTarget()
 	{
 		this->SetNextNodeByDir(TheGridGen->GetThreeDOfTwoDVector(PossibleNode->GetGridPosition() - this->GetLastNodeCoords()), true);
 	}
-}//
+}

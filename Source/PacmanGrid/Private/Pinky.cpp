@@ -91,7 +91,6 @@ void APinky::SetGhostTarget()
 
 	if(PhantomState == Scatter)
 	{
-		//Target->SetGridPosition(1,30);
 		Target = *(CustomTileMap.Find(FVector2D(30, 1)));
 	}
 
