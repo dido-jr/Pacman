@@ -29,10 +29,12 @@ void APinky::SetGhostTarget()
 	
 	if (eaten == true)
 	{
-		Target->SetGridPosition(19, 13);//!!!!!!!!!!!!!!!!!!!!!!!!
+		//CurrentMovementSpeed = 1000.0f;
+		Target = *(CustomTileMap.Find(FVector2D(19, 13)));
 		if (LastNode->GetGridPosition() == FVector2D(19, 13))
 		{
 			Home();
+			this->PhantomState = this->PrevPhantomState;
 		}
 	}
 
@@ -43,40 +45,61 @@ void APinky::SetGhostTarget()
 			Target = GetPlayer()->GetLastNode();
 			FVector2D  Pacman = GetPlayer()->GetLastNodeCoords();
 			FVector direzione = GetPlayer()->GetLastValidDirection();
+			FVector2D TargetProva;
 
 			if (direzione == FVector(0, 1, 0)) //destra
 			{
-				Target->SetGridPosition(Pacman.Y, Pacman.X + 4); //(Y,X)??
+				TargetProva = FVector2D(Pacman.X + 4, Pacman.Y);
+				if (TargetProva.X > 28)
+				{
+					TargetProva.X = 28;
+				}
+				Target = *(CustomTileMap.Find(FVector2D(TargetProva)));
 			}
 
 			if (direzione == FVector(0, -1, 0)) //sinistra
 			{
-				Target->SetGridPosition(Pacman.Y, Pacman.X - 4);
+				TargetProva = FVector2D(Pacman.X - 4, Pacman.Y);
+				if (TargetProva.X < 0)
+				{
+					TargetProva.X = 0;
+				}
+				Target = *(CustomTileMap.Find(TargetProva));
 			}
 
 			if (direzione == FVector(1, 0, 0))  //su
 			{
-				Target->SetGridPosition(Pacman.Y + 4, Pacman.X);
+				TargetProva = FVector2D(Pacman.X, Pacman.Y + 4);
+				if (TargetProva.Y > 30)
+				{
+					TargetProva.Y = 30;
+				}
+				Target = *(CustomTileMap.Find(FVector2D(TargetProva)));
 			}
 
 			if (direzione == FVector(-1, 0, 0))  //giù
 			{
-				Target->SetGridPosition(Pacman.Y - 4, Pacman.X);
+				TargetProva = FVector2D(Pacman.X, Pacman.Y - 4);
+				if (TargetProva.Y < 0)
+				{
+					TargetProva.Y = 0;
+				}
+				Target = *(CustomTileMap.Find(FVector2D(TargetProva)));
 			}
-
 		}
 	}
 
 	if(PhantomState == Scatter)
 	{
-		Target->SetGridPosition(1,30); //(Y,X)??
+		//Target->SetGridPosition(1,30);
+		Target = *(CustomTileMap.Find(FVector2D(30, 1)));
 	}
 
 	if (PhantomState == Frightened)
 	{
-		int x = rand() % 29 - 0;
-		int y = rand() % 31 - 0;
-		Target->SetGridPosition(y, x);
+		int x = rand() % 27 - 0;
+		int y = rand() % 27 - 0;
+		Target = *(CustomTileMap.Find(FVector2D(x, y)));
 	}
 
 	AGridBaseNode* PossibleNode = TheGridGen->GetClosestNodeFromMyCoordsToTargetCoords(this->GetLastNodeCoords(), Target->GetGridPosition(), -(this->GetLastValidDirection()));

@@ -31,31 +31,27 @@ void ABlinky::SetGhostTarget()
 	if (eaten == true)
 	{
 		//CurrentMovementSpeed = 1000.0f;
-		Target->SetGridPosition(19, 13);
+		Target = *(CustomTileMap.Find(FVector2D(19, 13)));
 		if (LastNode->GetGridPosition() == FVector2D(19, 13))
 		{
 			Home();
+			this->PhantomState = this->PrevPhantomState;
 		}
 	}
 
 	if (PhantomState == Chase) {
-		if (!Target)
-		{
 			Target = GetPlayer()->GetLastNode();
-		}
 	}
 	if(PhantomState == Scatter)
-	{
-		//cambio direzione
-		InvertDirection();
-		Target->SetGridPosition(26, 30); //(Y,X)??
+	{ 
+		Target = *(CustomTileMap.Find(FVector2D(29, 22)));
 	}
 	if (PhantomState == Frightened)
 	{
-		InvertDirection();
-		int x = rand()%29-0;
-		int y = rand()%31-0;
-		Target->SetGridPosition(y, x);
+		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, FString::Printf(TEXT("Blinky Frightened")));
+		int x = rand()%27-0;
+		int y = rand()%27-0;
+		Target = *(CustomTileMap.Find(FVector2D(y, x)));
 	}
 
 	AGridBaseNode* PossibleNode = TheGridGen->GetClosestNodeFromMyCoordsToTargetCoords(this->GetLastNodeCoords(), Target->GetGridPosition(), -(this->GetLastValidDirection()));

@@ -30,16 +30,16 @@ void AClyde::SetGhostTarget()
 
 	if (eaten == true)
 	{
-		Target->SetGridPosition(19,13);
+		//CurrentMovementSpeed = 1000.0f;
+		Target = *(CustomTileMap.Find(FVector2D(19, 13)));
 		if (LastNode->GetGridPosition() == FVector2D(19, 13))
 		{
 			Home();
+			this->PhantomState = this->PrevPhantomState;
 		}
 	}
 	
 	if (PhantomState == Chase) {
-		if (!Target)
-		{
 			FVector2D Pacman = GetPlayer()->GetLastNodeCoords();
 			FVector2D Clyde_pos = GetClyde()->GetLastNodeCoords();
 
@@ -54,21 +54,20 @@ void AClyde::SetGhostTarget()
 
 			else
 			{
-				Target->SetGridPosition(0, 0);
+				Target = *(CustomTileMap.Find(FVector2D(0, 0)));
 			}
-		}
 	}
 
 	if (PhantomState == Scatter)
 	{
-		Target->SetGridPosition(0, 0);
+		Target = *(CustomTileMap.Find(FVector2D(0, 0)));
 	}
 
 	if (PhantomState == Frightened)
 	{
-		int x = rand() % 29 - 0;
-		int y = rand() % 31 - 0;
-		Target->SetGridPosition(y, x);
+		int x = rand() % 27 - 0;
+		int y = rand() % 27 - 0;
+		Target = *(CustomTileMap.Find(FVector2D(y, x)));
 	}
 
 	AGridBaseNode* PossibleNode = TheGridGen->GetClosestNodeFromMyCoordsToTargetCoords(this->GetLastNodeCoords(), Target->GetGridPosition(), -(this->GetLastValidDirection()));

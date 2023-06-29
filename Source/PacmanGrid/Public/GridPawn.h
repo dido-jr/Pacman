@@ -24,6 +24,7 @@ public:
 	void SetNextNodeByDir(FVector InputDir, bool ForceLast = false);
 
 	FVector GetLastValidDirection() const;
+	void SetLastValidDirection(FVector Dir);
 
 	UFUNCTION(BlueprintCallable)
 	AGridBaseNode* GetLastNode() const;
@@ -46,8 +47,6 @@ protected:
 	FVector LastInputDirection;
 	UPROPERTY(VisibleAnywhere, Category = "Movement")
 	FVector LastValidInputDirection;
-
-	void SetLastValidDirection(FVector Dir);
 
 	UPROPERTY(EditAnywhere, Category = "Movement")
 	float CurrentMovementSpeed = 100.0f;

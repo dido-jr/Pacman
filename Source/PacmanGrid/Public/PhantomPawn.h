@@ -13,8 +13,7 @@
 
  UENUM()
  enum EPhantomState { Chase, Scatter, Frightened };
- UENUM()
-	 enum EPrevPhantomState { PChase,PScatter, PFrightened };
+
 
 UCLASS()
 class PACMANGRID_API APhantomPawn : public AGridPawn

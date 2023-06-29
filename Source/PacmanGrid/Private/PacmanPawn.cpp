@@ -105,7 +105,6 @@ void APacmanPawn::LifeCounter()
 	else
 	{
 		PacmanSpawn();
-		//fantasmi spawn 19,13
 	}
 }
 
@@ -121,7 +120,6 @@ void APacmanPawn::EndFrightenMode()
 	GetWorldTimerManager().UnPauseTimer(GameMode->InkyPawn->Timer);
 	GetWorldTimerManager().UnPauseTimer(GameMode->PinkyPawn->Timer);
 	GetWorldTimerManager().UnPauseTimer(GameMode->ClydePawn->Timer);
-	
 }
 
 void APacmanPawn::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
@@ -129,14 +127,15 @@ void APacmanPawn::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* Ot
 	const auto PointNode = Cast<AGridBaseNode>(OtherActor);
 
 	if (PointNode && PointNode->CanBeEat()) {
+
 		if (PointNode->Powered()) {
 			PointNode->Collider->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 			PointNode->StaticMesh->SetVisibility(false);
 			PointNode->IsEatable = false;
-			//TO DO: i fantasmi possono essere mangiati
-			score += 10;//?????????????????????
+			score += 10;
 			CurrentMovementSpeed = 450.0f;
-			GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, FString::Printf(TEXT("PACMAN ha mangiato power node")));
+			//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, FString::Printf(TEXT("PACMAN ha mangiato power node")));
+			GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, FString::FromInt(score));
 			GameMode->BlinkyPawn->SetFrightenedState();
 			GameMode->InkyPawn->SetFrightenedState();
 			GameMode->PinkyPawn->SetFrightenedState();
@@ -145,6 +144,7 @@ void APacmanPawn::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* Ot
 			GetWorldTimerManager().PauseTimer(GameMode->InkyPawn->Timer);
 			GetWorldTimerManager().PauseTimer(GameMode->PinkyPawn->Timer);
 			GetWorldTimerManager().PauseTimer(GameMode->ClydePawn->Timer);
+			if(GameMode->BlinkyPawn->PhantomState==Frightened){ GetWorld()->GetTimerManager().ClearTimer(FrightenedTimer);}
 			GetWorldTimerManager().SetTimer(FrightenedTimer, this, &APacmanPawn::EndFrightenMode, 6.0f, false);
 		}
 
@@ -161,20 +161,37 @@ void APacmanPawn::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* Ot
 			PointNode->Collider->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 			PointNode->StaticMesh->SetVisibility(false);
 			PointNode->IsEatable = false;
-			score += 1;//????????????????????????????
-			GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, FString::Printf(TEXT("PACMAN ha mangiato coin")));
+			score += 1;
+			//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, FString::FromInt(score));
 
 		}
+		if (score == 1)
+		{
+			GameMode->PinkyPawn->exit();
+		}
+		if (score == 3)
+		{
+			GameMode->InkyPawn->exit();
+		}
+		if (score == 6) {
+			GameMode->ClydePawn->exit();
+		}
+		/*if (score == total_score)
+		{
+			GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, FString::FromInt(score));
+			GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, FString::Printf(TEXT("Hai VINTO!!")));
+			Destroy();
+		}*/
 	}
 
 };
 
 void APacmanPawn::PacmanSpawn()
 {
-		CurrentGridCoords = FVector2D(14, 13);
-		SetNextNode(*(CustomTileMap.Find(FVector2D(14, 13))));
+		CurrentGridCoords = FVector2D(13, 14);
+		SetNextNode(*(CustomTileMap.Find(FVector2D(13, 14))));
 		SetTargetNode(NextNode);
-		LastNode = *(CustomTileMap.Find(FVector2D(14, 13)));
+		LastNode = *(CustomTileMap.Find(FVector2D(13, 14)));
 		const FVector spawn(1450.0f, 1350.0f, GetActorLocation().Z);
 		SetActorLocation(spawn);	
 }

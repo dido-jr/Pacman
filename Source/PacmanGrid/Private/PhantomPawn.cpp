@@ -41,15 +41,14 @@ void APhantomPawn::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* O
 	const auto PN = Cast<APacmanPawn>(OtherActor);
 	if (PN)
 	{
-		if (PhantomState == Frightened)
+		if (this->PhantomState == Frightened)
 		{
 			this->Eat();
-			//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, FString::Printf(TEXT("I Reached you..")));
 		}
 		else
 		{
-			PN->LifeCounter();//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-			//PN->Destroy();//ferma il gioco quando pacman vien mangiato
+			PN->LifeCounter();
+			//fantasmini a casa
 		}
 	}
 
@@ -57,11 +56,10 @@ void APhantomPawn::OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* O
 
 void APhantomPawn::Eat()
 {
-	BlueMesh->SetVisibility(false);
-	WhiteMesh->SetVisibility(false);
-	EatenMesh->SetVisibility(true);
+	this->BlueMesh->SetVisibility(false);
+	this->WhiteMesh->SetVisibility(false);
+	this->EatenMesh->SetVisibility(true);
 	eaten = true;
-	PrevPhantomState = this->PhantomState;
 }
 
 void APhantomPawn::OnNodeReached()
@@ -97,6 +95,7 @@ AGridBaseNode* APhantomPawn::GetPlayerRelativeTarget()
 void APhantomPawn::SetChaseState()
 {
 	GetWorldTimerManager().ClearTimer(Timer);
+	if (this->eaten != true) { InvertDirection(); }
 	GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, FString::Printf(TEXT("Chase")));
 	PhantomState = Chase;
 	if (ScatterRound < 4)
@@ -108,6 +107,7 @@ void APhantomPawn::SetChaseState()
 void APhantomPawn::SetScatterState()
 {
 	GetWorldTimerManager().ClearTimer(Timer);
+	if (this->eaten != true) { InvertDirection(); }
 	GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, FString::Printf(TEXT("Scatter")));
 		PhantomState = Scatter;
 		ScatterRound += 1;
@@ -123,9 +123,10 @@ void APhantomPawn::SetScatterState()
 
 void APhantomPawn::SetFrightenedState()
 {
+	PrevPhantomState = this->PhantomState;
 	GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, FString::Printf(TEXT("Frightened")));
 	PhantomState = Frightened;
-	InvertDirection();
+	if (this->eaten != true) { InvertDirection();}
 	SetBlueMesh();
 }
 
@@ -134,14 +135,14 @@ void APhantomPawn::SetBlueMesh()
 	if (flashes < 1)
 	{
 		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, FString::Printf(TEXT("BlueMesh")));
-		BlueMesh->SetVisibility(true);
+		this->BlueMesh->SetVisibility(true);
 		GetWorldTimerManager().SetTimer(MeshTimer, this, &APhantomPawn::SetWhiteMesh, 6.0, false);
 		flashes += 1;
 	}
 	else
 	{
-		WhiteMesh->SetVisibility(false);
-		BlueMesh->SetVisibility(true);
+		this->WhiteMesh->SetVisibility(false);
+		this->BlueMesh->SetVisibility(true);
 		GetWorldTimerManager().SetTimer(MeshTimer, this, &APhantomPawn::SetWhiteMesh, 0.5f, false);
 	}
 }
@@ -152,16 +153,16 @@ void APhantomPawn::SetWhiteMesh()
 	GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, FString::Printf(TEXT("WhiteMesh")));
 	if (flashes < 7)
 	{
-		BlueMesh->SetVisibility(false);
-		WhiteMesh->SetVisibility(true);
+		this->BlueMesh->SetVisibility(false);
+		this->WhiteMesh->SetVisibility(true);
 		flashes += 1;
 		GetWorldTimerManager().SetTimer(MeshTimer, this, &APhantomPawn::SetBlueMesh, 0.5f, false);
 	}
 	else
 	{
 		flashes = 0;
-		BlueMesh->SetVisibility(false);
-		WhiteMesh->SetVisibility(false);
+		this->BlueMesh->SetVisibility(false);
+		this->WhiteMesh->SetVisibility(false);
 	}
 }
 
@@ -196,18 +197,19 @@ void APhantomPawn::Home()
 	SetTargetNode(NextNode);
 	LastNode = *(CustomTileMap.Find(FVector2D(16, 13)));
 	const FVector entry(1650.0f, 1350.0f, GetActorLocation().Z);
-	GetWorldTimerManager().SetTimer(Timer, this, &APhantomPawn::exit, 0.5f, false);
+	GetWorldTimerManager().SetTimer(Timer, this, &APhantomPawn::exit, 5.0f, false);
 }
 
 void APhantomPawn::exit()
 {
-	EatenMesh->SetVisibility(false);//dovrebbe cambiare mesh prima di uscire: si può usare un delay
+	StaticMesh->SetVisibility(true);
+	EatenMesh->SetVisibility(false);
 	eaten = false;
-	this->PhantomState = PrevPhantomState;
 	CurrentGridCoords = FVector2D(19, 13);
 	SetNextNode(*(CustomTileMap.Find(FVector2D(19, 13))));
 	SetTargetNode(NextNode);
 	LastNode = *(CustomTileMap.Find(FVector2D(19, 13)));
 	const FVector ex(1950.0f, 1300.0f, GetActorLocation().Z);
 	SetActorLocation(ex);
+	//CurrentMovementSpeed = 370.f;
 }

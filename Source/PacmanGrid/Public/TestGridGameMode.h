@@ -31,7 +31,7 @@ public:
 	AGridGenerator* GField;
 
 	UPROPERTY(EditDefaultsOnly)
-	TSubclassOf<ABlinky> BlinkyClass;
+		TSubclassOf<ABlinky> BlinkyClass;
 
 	UPROPERTY(EditDefaultsOnly)
 		TSubclassOf<AInky> InkyClass;
@@ -43,7 +43,7 @@ public:
 		TSubclassOf<APinky> PinkyClass;
 
 	UPROPERTY(VisibleAnywhere)
-	ABlinky* BlinkyPawn;
+		ABlinky* BlinkyPawn;
 
 	UPROPERTY(VisibleAnywhere)
 		AInky* InkyPawn;

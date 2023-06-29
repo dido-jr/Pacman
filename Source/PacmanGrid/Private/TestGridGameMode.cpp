@@ -36,10 +36,10 @@ void ATestGridGameMode::BeginPlay()
 		GField = GetWorld()->SpawnActor<AGridGenerator>(GridGeneratorClass, GridPos, FRotationMatrix::MakeFromX(FVector(0, 0, 0)).Rotator());
 	};
 
-	BlinkyPawn = GetWorld()->SpawnActor<ABlinky>(BlinkyClass, FVector((100 * 27) + 50, (100 * 26) + 50, 5.0f), FRotator(0, 0, 0));
-	InkyPawn = GetWorld()->SpawnActor<AInky>(InkyClass, FVector((100 * 5) + 50, (100 * 26) + 50, 5.0f), FRotator(0, 0, 0));
-	PinkyPawn = GetWorld()->SpawnActor<APinky>(PinkyClass, FVector((100 * 27) + 50, (100 * 26) + 50, 5.0f), FRotator(0, 0, 0));
-	ClydePawn = GetWorld()->SpawnActor<AClyde>(ClydeClass, FVector((100 * 5) + 50, (100 * 26) + 50, 5.0f), FRotator(0, 0, 0));
+	BlinkyPawn = GetWorld()->SpawnActor<ABlinky>(BlinkyClass, FVector((100 * 19) + 50, (100 * 14) + 50, 5.0f), FRotator(0, 0, 0));
+	InkyPawn = GetWorld()->SpawnActor<AInky>(InkyClass, FVector((100 * 16) + 50, (100 * 11) + 50, 5.0f), FRotator(0, 0, 0));
+	PinkyPawn = GetWorld()->SpawnActor<APinky>(PinkyClass, FVector((100 * 16) + 50, (100 * 13) + 50, 5.0f), FRotator(0, 0, 0));
+	ClydePawn = GetWorld()->SpawnActor<AClyde>(ClydeClass, FVector((100 * 16) + 50, (100 * 15) + 50, 5.0f), FRotator(0, 0, 0));
 
 	//AActor* CherryActor = UGameplayStatics::GetActorOfClass(GetWorld(),AFruit::StaticClass());
 	//Fruit = Cast<AFruit>(CherryActor);
