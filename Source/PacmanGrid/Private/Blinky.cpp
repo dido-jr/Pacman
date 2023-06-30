@@ -39,14 +39,14 @@ void ABlinky::SetGhostTarget()
 		}
 	}
 
-	if (PhantomState == Chase) {
+	else if (PhantomState == Chase) {
 			Target = GetPlayer()->GetLastNode();
 	}
-	if(PhantomState == Scatter)
+	else if(PhantomState == Scatter)
 	{ 
 		Target = *(CustomTileMap.Find(FVector2D(29, 22)));
 	}
-	if (PhantomState == Frightened)
+	else if (PhantomState == Frightened)
 	{
 		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, FString::Printf(TEXT("Blinky Frightened")));
 		int x = rand()%27-0;

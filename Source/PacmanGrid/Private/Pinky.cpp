@@ -38,7 +38,7 @@ void APinky::SetGhostTarget()
 		}
 	}
 
-	if (PhantomState == Chase)
+	else if (PhantomState == Chase)
 	{
 		if (!Target)
 		{
@@ -89,12 +89,12 @@ void APinky::SetGhostTarget()
 		}
 	}
 
-	if(PhantomState == Scatter)
+	else if(PhantomState == Scatter)
 	{
 		Target = *(CustomTileMap.Find(FVector2D(30, 1)));
 	}
 
-	if (PhantomState == Frightened)
+	else if (PhantomState == Frightened)
 	{
 		int x = rand() % 27 - 0;
 		int y = rand() % 27 - 0;

@@ -39,7 +39,7 @@ void AInky::SetGhostTarget()
 		}
 	}
 
-	if (PhantomState == Chase) {
+	else if (PhantomState == Chase) {
 		if (!Target)
 		{
 			Target = GetPlayer()->GetLastNode();
@@ -65,12 +65,12 @@ void AInky::SetGhostTarget()
 		}
 	}
 
-	if(PhantomState == Scatter)
+	else if(PhantomState == Scatter)
 	{
 		Target = *(CustomTileMap.Find(FVector2D(27, 0)));
 	}
 
-	if (PhantomState == Frightened)
+	else if (PhantomState == Frightened)
 	{
 		int x = rand() % 27 - 0;
 		int y = rand() % 27 - 0;

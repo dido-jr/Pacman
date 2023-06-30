@@ -39,7 +39,7 @@ void AClyde::SetGhostTarget()
 		}
 	}
 	
-	if (PhantomState == Chase) {
+	else if (PhantomState == Chase) {
 			FVector2D Pacman = GetPlayer()->GetLastNodeCoords();
 			FVector2D Clyde_pos = GetClyde()->GetLastNodeCoords();
 
@@ -58,12 +58,12 @@ void AClyde::SetGhostTarget()
 			}
 	}
 
-	if (PhantomState == Scatter)
+	else if (PhantomState == Scatter)
 	{
 		Target = *(CustomTileMap.Find(FVector2D(0, 0)));
 	}
 
-	if (PhantomState == Frightened)
+	else if (PhantomState == Frightened)
 	{
 		int x = rand() % 27 - 0;
 		int y = rand() % 27 - 0;
